@@ -4,6 +4,6 @@ sign = input('>> ')
 if sign == '+':
     print(a + b)
 if sign == '-':
-    print(a + b)
+    print(a - b)
 if sign == '*':
-    print(a + b)
+    print(a * b)

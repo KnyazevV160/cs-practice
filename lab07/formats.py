@@ -15,6 +15,8 @@ def csv_to_records(text: str) -> list[dict]:
 
 def _scalar(value):
     value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
+        return value[1:-1]
     if value.lower() in ('true', 'yes'):
         return True
     if value.lower() in ('false', 'no'):
@@ -35,7 +37,7 @@ def parse_settings(lines: list[str]) -> dict:
         if not line:
             continue
         if line.startswith('- ') and current is not None:
-            settings[current].append(line[2:].strip())
+            settings[current].append(_scalar(line[2:]))
         elif ':' in line:
             key, value = (part.strip() for part in line.split(':', 1))
             if value:

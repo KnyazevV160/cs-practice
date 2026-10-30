@@ -1,14 +1,19 @@
 """Чистые функции для работы с путями и размерами."""
+
+
 def count_by_extension(paths: list[str]) -> dict[str, int]:
     counts = {}
     for path in paths:
         name = path.rsplit('/', 1)[-1]
-        extension = name.rsplit('.', 1)[1].lower() if '.' in name else ''
+        stem, separator, suffix = name.rpartition('.')
+        extension = suffix.lower() if separator and stem else ''
         counts[extension] = counts.get(extension, 0) + 1
     return counts
 
+
 def deepest_path(paths: list[str]) -> str:
     return min(paths, key=lambda path: (-path.count('/'), path), default='')
+
 
 def human_size(n_bytes: int) -> str:
     units = ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ']

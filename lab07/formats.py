@@ -23,7 +23,7 @@ def _scalar(value):
         return int(value)
     except ValueError:
         try:
-            return float(value)
+            return float(value.replace(',', '.'))
         except ValueError:
             return value
 
@@ -35,7 +35,7 @@ def parse_settings(lines: list[str]) -> dict:
         if not line:
             continue
         if line.startswith('- ') and current is not None:
-            settings[current].append(_scalar(line[2:]))
+            settings[current].append(line[2:].strip())
         elif ':' in line:
             key, value = (part.strip() for part in line.split(':', 1))
             if value:
